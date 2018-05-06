@@ -1,19 +1,20 @@
 package kohn.roadConditions;
 
-//convert to maven project (configure) 
-//then add retrofit dependencies in the pom.xml file
 public class RoadConditions {
 
 	private String id;
 	private RoadConditionsProperties properties;
-	
-	public String getId() {
+
+	public RoadConditions(String condition, 
+			String subCondition, String location, String details) {
+		properties = new RoadConditionsProperties(condition, subCondition, details);
+	}
+	public String getID() {
 		return id;
 	}
-	
+
 	public RoadConditionsProperties getProperties() {
 		return properties;
 	}
-	
-	
+
 }

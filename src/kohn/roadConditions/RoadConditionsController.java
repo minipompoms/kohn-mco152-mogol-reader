@@ -25,25 +25,26 @@ public class RoadConditionsController {
 		
 	}
 	
-	private void requestRoadConditionsFeed(Call<RoadConditionsFeed>call, 
+	private void requestRoadConditionsFeed(Call<RoadConditionsModel>call, 
 			JTextComponent conditions) {
-		call.enqueue(new Callback<RoadConditionsFeed>() {
+		call.enqueue(new Callback<RoadConditionsModel>() {
 
 			@Override
-			public void onResponse(Call<RoadConditionsFeed> call, Response<RoadConditionsFeed> response) {
-				RoadConditionsFeed feed = response.body();
+			public void onResponse(Call<RoadConditionsModel> call, Response<RoadConditionsModel> response) {
+				RoadConditionsModel feed = response.body();
 				Optional<RoadConditions> roadConditions = feed.getFeatures()
 						.stream()
 						.findAny();
 				
 				RoadConditionsProperties properties =  roadConditions.get().getProperties();
-				String details = String.valueOf(properties.getLocation() + "\t" + properties.getCondition()
+				String details = String.valueOf(properties.getCondition()
 												+ "\n" + properties.getDetails()+ properties.getSubCondition());
+				System.out.println("conditions"+details);
 				conditions.setText(details);
 			}
 
 			@Override
-			public void onFailure(Call<RoadConditionsFeed> call, Throwable t) {
+			public void onFailure(Call<RoadConditionsModel> call, Throwable t) {
 				t.getMessage();
 			}
 			
