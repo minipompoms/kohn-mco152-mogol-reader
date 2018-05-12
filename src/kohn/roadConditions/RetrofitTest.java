@@ -11,8 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitTest {
 	public static void main(String [] args)throws IOException  {
-		String coordinatesNE = "-74.66171,40.95709";
-		String coordinatesSW = "-73.29666,40.43650";
+		String coordinatesNE = "41.252000, 286.413574";
+		String coordinatesSW = "40.551374, 285.721436";
 		
 		Retrofit retrofit = new Retrofit.Builder()
 				.baseUrl("https://api.mogolinc.com")
@@ -26,10 +26,13 @@ public class RetrofitTest {
 			@Override
 			public void onResponse(Call<RoadConditionsModel> call, Response<RoadConditionsModel> response) {
 				RoadConditionsModel feed = response.body();
+				int noEvents = feed.getFeatures().size();
+				String condition = feed.getFeatures().get(600).getProperties().getCondition();
+				String getDetails = feed.getFeatures().get(600).getProperties().getDetails();
+				//System.out.println(noEvents);
 
-				long getDetails = feed.getFeatures().stream().count();
-				
-				System.out.println(getDetails);
+				//System.out.println(condition);
+				//System.out.println(getDetails);
 			}
 
 			@Override

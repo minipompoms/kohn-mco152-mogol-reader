@@ -1,9 +1,18 @@
 package kohn.roadConditions;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.text.JTextComponent;
 
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,17 +21,36 @@ public class RoadConditionsView extends JFrame{
 
 	private JTextField highLatLng;
 	private JTextField lowLatLng;
-	
-	private JTextField roadConditions;
-	
-	String coordinatesNE = "-74.66171,40.95709";
-	String coordinatesSW = "-73.29666,40.43650";
-	public RoadConditionsView() {
-		JTextField highLatLng = new JTextField();
-		highLatLng.setText(coordinatesNE);
-		JTextField lowLatLng = new JTextField();
-		lowLatLng.setText(coordinatesSW);
 
+	private JTextArea roadConditions;
+	
+	String coordinatesNE = "41.252000, 286.413574";
+	String coordinatesSW = "40.551374, 285.721436";
+	Call<RoadConditionsModel>call;
+	public RoadConditionsView() {
+		setLocation(540, 320);
+		setSize(740, 400);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel input = new JPanel(new GridLayout(1,0));
+		JPanel output = new JPanel(new GridLayout(0, 1));
+		
+		highLatLng = new JTextField();
+		highLatLng.setText(coordinatesNE);
+		lowLatLng = new JTextField();
+		lowLatLng.setText(coordinatesSW);
+		input.add(new JLabel("NE Coordinates: " + highLatLng.getText()));
+		input.add(new JLabel("SW Coordinates: " + lowLatLng.getText()));
+		
+		roadConditions = new JTextArea();
+		output.add(roadConditions);
+		Border border = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+		input.setBorder(border);
+		output.setBorder(border);
+		output.setSize(30, 40);
+		setTitle("Current Road Conditions...");
+		add(input, BorderLayout.PAGE_START);
+		add(output, BorderLayout.CENTER);
+		
 		Retrofit retrofit = new Retrofit.Builder()
 				.baseUrl("https://api.mogolinc.com")
 				.addConverterFactory(GsonConverterFactory.create())
@@ -33,7 +61,7 @@ public class RoadConditionsView extends JFrame{
 		controller.refreshData();
 	}
 	
-	public String getHighLatLng() {
+	public String getHighLatLng() {		
 		return highLatLng.getText();
 	}
 	
