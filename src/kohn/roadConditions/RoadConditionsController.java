@@ -1,11 +1,7 @@
 package kohn.roadConditions;
 
-import java.awt.Component;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+
+import java.util.ArrayList;
 
 import javax.swing.text.JTextComponent;
 
@@ -46,14 +42,17 @@ public class RoadConditionsController {
 	}
 	
 	public void showConditions(JTextComponent conditions, RoadConditionsModel feed) {
-		
-		feed.getFeatures()
+		ArrayList<String> conditionsFeed = new ArrayList<>();
+		StringBuilder sb = new StringBuilder();
+			feed.getFeatures()
 				.stream()
-				.forEach(e -> System.out.println(e.getProperties().getDetails()+"\n"));
-				
-		//String deets = String.valueOf(roadConditions);
-		
-		//conditions.setText(deets);
+				.forEach(e -> conditionsFeed.add(e.getProperties().getDetails()));
+			int size = conditionsFeed.size()-1;
+		for(int i =size; i > size-15; i--) {
+			sb.append("\n  ").append(conditionsFeed.get(i)).append("\n");
+		}
+		conditions.setText(sb.toString());
+
 	}
 	
 	public void requestConditions() {

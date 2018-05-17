@@ -1,9 +1,11 @@
 package kohn.roadConditions;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,15 +23,16 @@ public class RoadConditionsView extends JFrame{
 
 	private JTextField highLatLng;
 	private JTextField lowLatLng;
-
+	
 	private JTextArea roadConditions;
+
 	
 	String coordinatesNE = "41.252000, 286.413574";
 	String coordinatesSW = "40.551374, 285.721436";
 	Call<RoadConditionsModel>call;
 	public RoadConditionsView() {
-		setLocation(540, 320);
-		setSize(740, 400);
+		setLocation(240, 80);
+		setSize(980, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel input = new JPanel(new GridLayout(1,0));
 		JPanel output = new JPanel(new GridLayout(0, 1));
@@ -38,16 +41,19 @@ public class RoadConditionsView extends JFrame{
 		highLatLng.setText(coordinatesNE);
 		lowLatLng = new JTextField();
 		lowLatLng.setText(coordinatesSW);
-		input.add(new JLabel("NE Coordinates: " + highLatLng.getText()));
-		input.add(new JLabel("SW Coordinates: " + lowLatLng.getText()));
 		
 		roadConditions = new JTextArea();
 		output.add(roadConditions);
-		Border border = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+		
+		input.add(new JLabel("   Current Road Conditions..."));		
+		input.setBackground((new Color(3, 118, 38)));		
+		output.setBackground(new Color(210, 226, 215));
+		Border border = BorderFactory.createEmptyBorder(20, 20, 20, 20);		
 		input.setBorder(border);
 		output.setBorder(border);
-		output.setSize(30, 40);
-		setTitle("Current Road Conditions...");
+		output.setSize(30, 42);
+		
+		setTitle("NE Coordinates: " + highLatLng.getText()+ " SW Coordinates: " + lowLatLng.getText());
 		add(input, BorderLayout.PAGE_START);
 		add(output, BorderLayout.CENTER);
 		
